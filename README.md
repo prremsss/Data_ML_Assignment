@@ -1,4 +1,4 @@
-# DNA Engineering ML Home Assignment
+# DNA Engineering ML Assignment
 
 ## Requirements
 - Python 3.9 or higher.

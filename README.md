@@ -10,7 +10,7 @@
 Or follow [documentation](https://pipenv.pypa.io/en/latest/install/) to install it properly on your system
 #### - Install requirements
 ```sh
-    cd data-ml-home-assignement
+    cd data-ml-assignement
 ```
 ```Python
     pipenv install

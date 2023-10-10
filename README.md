@@ -7,7 +7,7 @@
 ```Python
     pip install pipenv 
 ```
-Or follow [documentation]([https://pipenv.pypa.io/en/latest/install/](https://pipenv.pypa.io/en/latest/installation/)) to install it properly on your system
+Or follow [documentation](https://pipenv.pypa.io/en/latest/install/](https://pipenv.pypa.io/en/latest/installation/)) to install it properly on your system
 #### - Install requirements
 ```sh
     cd data-ml-assignment

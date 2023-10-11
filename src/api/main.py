@@ -1,6 +1,7 @@
 import uvicorn
-
-from src.api.server import server
+import sys
+sys.path.append('C:/Users/LEGION/Desktop/MASTER/PFE/web/Data_ML_Assignment')
+from  src.api.server import server
 
 if __name__ == "__main__":
     serving_app = server()

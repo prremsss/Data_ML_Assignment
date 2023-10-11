@@ -4,16 +4,21 @@ from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
 from sklearn.model_selection import train_test_split
 
 from src.constants import RAW_DATASET_PATH, MODELS_PATH, REPORTS_PATH, LABELS_MAP
-from src.models.naive_bayes_model import NaiveBayesModel
+from src.models.randomForest_model import RandomForestModel
 from src.utils.plot_utils import PlotUtils
 
+import re
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
 
 class TrainingPipeline:
     def __init__(self):
         df = pd.read_csv(RAW_DATASET_PATH)
 
-        text = df['resume']
+        text = df.resume.apply(lambda x: self.cleanResume(x))
+
         y = df['label']
+
 
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(
             text,
@@ -24,8 +29,27 @@ class TrainingPipeline:
 
         self.model = None
 
+    def cleanResume(self, text):
+        text = re.sub('http\S+\s*', ' ', text)  # remove URLs
+        text = re.sub(r'[^\w\s]', ' ', text)  # remove punctuations
+        text = re.sub(r'[^\x00-\x7f]', r' ', text)
+        text = re.sub('\s+', ' ', text)  # remove extra whitespace
+        text = re.sub('SUMMARY', ' ', text)  # remove the word SUMMARY
+        text = text.lower()  # lower text
+        words = text.split()  # Tokenize the text into words
+        # Remove stop words
+        stop_words = set(stopwords.words("english"))
+        words = [word for word in words if word not in stop_words]
+        # Lemmatize the words
+        lemmatizer = WordNetLemmatizer()
+        words = [lemmatizer.lemmatize(word) for word in words]
+        # Rejoin the words to form preprocessed text
+        preprocessed_text = " ".join(words)
+
+        return preprocessed_text
+
     def train(self, serialize: bool = True, model_name: str = 'model'):
-        self.model = NaiveBayesModel()
+        self.model = RandomForestModel()
         self.model.fit(
             self.x_train,
             self.y_train
